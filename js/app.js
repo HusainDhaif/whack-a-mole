@@ -61,7 +61,7 @@ function peep() {
       misses++;
       missesDisplay.textContent = misses;
       if (misses >= 2) {
-        endGame("Game Over! You missed too many moles 😢");
+        endGame("Game Over! You missed too many moles ");
         return;
       }
       peep();
@@ -87,9 +87,9 @@ function startGame() {
       clearInterval(countdown);
       timeUp = true;
       if (score >= 10) {
-        endGame("🎉 You Win! Final Score: " + score);
+        endGame(" You Win! Final Score: " + score);
       } else {
-        endGame("⏰ Time’s up! Final Score: " + score);
+        endGame(" Time’s up! Final Score: " + score);
       }
     }
   }, 1000);
@@ -105,7 +105,7 @@ function bonk(e) {
   scoreBoard.textContent = score;
 
   if (score >= 10) {
-    endGame("🎉 You Win! Final Score: " + score);
+    endGame(" You Win! Final Score: " + score);
   }
 }
 
