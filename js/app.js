@@ -23,13 +23,12 @@
 // // ON GAME END:
 // // - Disable clicks
 // // - Display final score
-
-
 const holes = document.querySelectorAll('.hole');
 const scoreBoard = document.querySelector('.score');
 const timerDisplay = document.querySelector('.timer');
 const missesDisplay = document.querySelector('.misses');
 const playButton = document.querySelector('.play');
+const messageBox = document.querySelector('.message');
 
 let lastHole;
 let timeUp = false;
@@ -50,34 +49,37 @@ function randomHole(holes) {
   return hole;
 }
 
-// make mole pop
+// make mole pops
 function peep() {
   const hole = randomHole(holes);
   hole.classList.add('up');
-  const time = 800;
+
   moleTimer = setTimeout(() => {
-    hole.classList.remove('up');
-    if (!timeUp) {
+    if (hole.classList.contains('up')) {
+      // missed bunny
       misses++;
       missesDisplay.textContent = misses;
+      hole.classList.remove('up');
       if (misses >= 2) {
-        endGame("Game Over! You missed too many moles ");
+        endGame("Game Over! Too many misses.");
         return;
       }
-      peep();
     }
-  }, time);
+    if (!timeUp) peep();
+  }, 800);
 }
 
 // start game
 function startGame() {
   score = 0;
   misses = 0;
-  scoreBoard.textContent = score;
-  missesDisplay.textContent = misses;
   timeLeft = 15;
   timeUp = false;
+  scoreBoard.textContent = score;
+  missesDisplay.textContent = misses;
+  timerDisplay.textContent = timeLeft;
   playButton.disabled = true;
+  messageBox.textContent = ""; // clear old message
 
   peep();
   countdown = setInterval(() => {
@@ -86,11 +88,7 @@ function startGame() {
     if (timeLeft <= 0) {
       clearInterval(countdown);
       timeUp = true;
-      if (score >= 10) {
-        endGame(" You Win! Final Score: " + score);
-      } else {
-        endGame(" Time’s up! Final Score: " + score);
-      }
+      endGame(score >= 10 ? "🎉 You Win! Final Score: " + score : "⏰ Time’s up! Final Score: " + score);
     }
   }, 1000);
 }
@@ -98,14 +96,15 @@ function startGame() {
 // hit mole
 function bonk(e) {
   if (!e.isTrusted) return; // prevent cheating
-  if (!this.parentNode.classList.contains('up')) return;
+  const hole = this.parentNode;
+  if (!hole.classList.contains('up')) return;
 
   score++;
-  this.parentNode.classList.remove('up');
+  hole.classList.remove('up');
   scoreBoard.textContent = score;
 
   if (score >= 10) {
-    endGame(" You Win! Final Score: " + score);
+    endGame("🎉 You Win! Final Score: " + score);
   }
 }
 
@@ -115,16 +114,11 @@ function endGame(message) {
   clearTimeout(moleTimer);
   timeUp = true;
   playButton.disabled = false;
-  alert(message);
+  messageBox.textContent = message;
 }
 
-document.querySelectorAll('.mole').forEach(mole => mole.addEventListener('click', bonk));
+document.querySelectorAll('.bunny-img').forEach(bunny =>
+  bunny.addEventListener('click', bonk)
+);
 playButton.addEventListener('click', startGame);
-
-
-
-
-
-
-
 
