@@ -1,4 +1,5 @@
-/* General Page Style */
+/* with help of (github projects, google, youtube designs) */
+
 body {
   text-align: center;
   font-family: "Comic Sans MS", Arial, sans-serif;
@@ -9,15 +10,15 @@ body {
   overflow-x: hidden;
 }
 
-/* Game Title */
+
 h1 {
   font-size: 2.5rem;
-  color: #fff;
-  text-shadow: 2px 2px #333;
+  color: white;
+  text-shadow: 2px 2px black;
   margin-bottom: 10px;
 }
 
-/* Info section (score + timer) */
+
 .info {
   margin-bottom: 15px;
   font-size: 1.2rem;
@@ -26,46 +27,45 @@ h1 {
 
 #score, #time {
   font-weight: bold;
-  color: #d32f2f;
+  color: red;
 }
 
-/* Game Grid */
+
 .game {
   display: grid;
-  grid-template-columns: repeat(3, 200px); /* smaller width */
+  grid-template-columns: repeat(3, 200px); 
   gap: 12px;
   justify-content: center;
   margin: 15px auto;
   background: rgba(255, 255, 255, 0.6);
   padding: 15px;
   border-radius: 20px;
-  box-shadow: 0px 6px 15px rgba(0,0,0,0.2);
+  box-shadow: 0px 6px 15px black;
 }
 
-/* Hole container */
+
 .hole {
   position: relative;
-  width: 200px;  /* smaller */
-  height: 160px; /* smaller */
+  width: 200px;  
+  height: 160px; 
   overflow: hidden;
   border-radius: 12px;
   background: #6ab04c;
-  box-shadow: inset 0px 3px 6px rgba(0,0,0,0.4);
+  box-shadow: inset 0px 3px 6px black;
 }
 
-/* Hole image */
 .hole-img {
   width: 100%;
   height: auto;
 }
 
-/* Bunny */
+
 .bunny-img {
   position: absolute;
   bottom: -120px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px; /* smaller bunny */
+  width: 100px; 
   cursor: pointer;
   transition: bottom 0.3s ease;
 }
@@ -76,12 +76,12 @@ h1 {
 
 /* Start Button */
 #startBtn {
-  background: #ff9800;
+  background: dark orange;
   border: none;
   padding: 10px 20px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #fff;
+  color: white;
   border-radius: 25px;
   cursor: pointer;
   transition: 0.3s;
@@ -89,7 +89,7 @@ h1 {
 }
 
 #startBtn:hover {
-  background: #e65100;
+  background: dark rgb(227, 95, 7);
   transform: scale(1.05);
 }
 
@@ -99,5 +99,5 @@ h1 {
   font-weight: bold;
   margin-top: 15px;
   color: #2c3e50;
-  text-shadow: 1px 1px #fff;
+  text-shadow: 1px 1px white;
 }

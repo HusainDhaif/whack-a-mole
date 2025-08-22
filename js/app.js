@@ -23,12 +23,10 @@
 // // ON GAME END:
 // // - Disable clicks
 // // - Display final score
-const holes = document.querySelectorAll('.hole');
-const scoreBoard = document.querySelector('.score');
-const timerDisplay = document.querySelector('.timer');
-const missesDisplay = document.querySelector('.misses');
-const playButton = document.querySelector('.play');
-const messageBox = document.querySelector('.message');
+
+/*-------------------------------- Constants --------------------------------*/
+
+/*---------------------------- Variables (state) ----------------------------*/
 
 let lastHole;
 let timeUp = false;
@@ -38,7 +36,19 @@ let misses = 0;
 let countdown;
 let moleTimer;
 
-// pick random hole
+/*------------------------ Cached Element References ------------------------*/
+
+const holes = document.querySelectorAll('.hole');
+const scoreBoard = document.querySelector('.score');
+const timerDisplay = document.querySelector('.timer');
+const missesDisplay = document.querySelector('.misses');
+const playButton = document.querySelector('.play');
+const messageBox = document.querySelector('.message');
+
+
+/*-------------------------------- Functions --------------------------------*/
+
+
 function randomHole(holes) {
   const idx = Math.floor(Math.random() * holes.length);
   const hole = holes[idx];
@@ -49,14 +59,14 @@ function randomHole(holes) {
   return hole;
 }
 
-// make mole pops
+// to make the mole pops
 function peep() {
   const hole = randomHole(holes);
   hole.classList.add('up');
 
   moleTimer = setTimeout(() => {
     if (hole.classList.contains('up')) {
-      // missed bunny
+      // for missed bunnys
       misses++;
       missesDisplay.textContent = misses;
       hole.classList.remove('up');
@@ -69,7 +79,7 @@ function peep() {
   }, 800);
 }
 
-// start game
+
 function startGame() {
   score = 0;
   misses = 0;
@@ -79,7 +89,7 @@ function startGame() {
   missesDisplay.textContent = misses;
   timerDisplay.textContent = timeLeft;
   playButton.disabled = true;
-  messageBox.textContent = ""; // clear old message
+  messageBox.textContent = ""; 
 
   peep();
   countdown = setInterval(() => {
@@ -88,27 +98,33 @@ function startGame() {
     if (timeLeft <= 0) {
       clearInterval(countdown);
       timeUp = true;
-      endGame(score >= 10 ? "🎉 You Win! Final Score: " + score : "⏰ Time’s up! Final Score: " + score);
+      endGame(score >= 10 ? " You Win! Final Score: " + score : " Time’s up! Final Score: " + score);
     }
   }, 1000);
 }
 
 // hit mole
+// this part was mainly used and inspired by some other projects seen from github plus some youtube videos for coding
+//
 function bonk(e) {
-  if (!e.isTrusted) return; // prevent cheating
+  if (!e.isTrusted) return; 
   const hole = this.parentNode;
   if (!hole.classList.contains('up')) return;
+// at first calling the function and ruunning it by the element 'e' which give the click detail
+// then the (if) makes sure that it was a proper hit not a crack in the code 
+// after that the const part is for finding the hole that the bunny belogns to.
+// and the last part is if the bunny is invisible it will ignore any click
 
   score++;
   hole.classList.remove('up');
   scoreBoard.textContent = score;
 
   if (score >= 10) {
-    endGame("🎉 You Win! Final Score: " + score);
+    endGame(" You Win! Final Score: " + score);
   }
 }
 
-// end game
+
 function endGame(message) {
   clearInterval(countdown);
   clearTimeout(moleTimer);
@@ -116,6 +132,8 @@ function endGame(message) {
   playButton.disabled = false;
   messageBox.textContent = message;
 }
+
+/*----------------------------- Event Listeners -----------------------------*/
 
 document.querySelectorAll('.bunny-img').forEach(bunny =>
   bunny.addEventListener('click', bonk)
